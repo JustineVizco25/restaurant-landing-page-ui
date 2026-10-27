@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="650" viewBox="0 0 900 650">
+<rect width="900" height="650" fill="#171717"/>
+<ellipse cx="450" cy="280" rx="215" ry="170" fill="#202020" stroke="#39342a" stroke-width="2"/>
+<ellipse cx="450" cy="280" rx="180" ry="140" fill="none" stroke="#4a4030"/>
+<path d="M415 290l25-30 25 24 18-17 22 23" fill="none" stroke="#9c8756" stroke-width="3"/>
+<circle cx="472" cy="248" r="7" fill="#9c8756"/>
+<text x="450" y="510" text-anchor="middle" fill="#f3d382" font-family="Georgia,serif" font-size="28">Calamari</text>
+<text x="450" y="548" text-anchor="middle" fill="#9b958a" font-family="Arial,sans-serif" font-size="16" letter-spacing="3">PHOTO COMING SOON</text>
+</svg>

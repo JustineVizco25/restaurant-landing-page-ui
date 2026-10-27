@@ -1,0 +1,226 @@
+.reservation-container {
+  --booking-gold: #f3d382;
+  --booking-line: #f3d38230;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 28px 32px 0;
+  color: #f1eee7;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.reservation-container button,
+.reservation-container input,
+.reservation-container select,
+.reservation-container textarea {
+  font: inherit;
+}
+
+.reservation-container button { cursor: pointer; }
+.reservation-container button:disabled { opacity: .4; cursor: not-allowed; }
+.reservation-container :focus-visible { outline: 2px solid var(--booking-gold); outline-offset: 4px; }
+.reservation-container a { color: inherit; }
+
+.reservation-back-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--booking-line);
+}
+
+.reservation-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.reservation-back-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--booking-line);
+  border-radius: 50%;
+  color: var(--booking-gold);
+  font-size: 20px;
+}
+
+.reservation-back-link:hover { color: var(--booking-gold); }
+.booking-concept-label { font-size: 10px; letter-spacing: 1.5px; color: #b9b4a7; line-height: 1.8; }
+.reservation-header-container { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 30px 0; }
+.reservation-header-title { margin: 0 0 12px; font: 400 31px/1.2 'Great Vibes', cursive; color: var(--booking-gold); }
+.reservation-header-caption { margin: 0; font-size: 13px; line-height: 1.6; color: #c8c2b6; }
+.order-reservation-btn-container { display: flex; border: 1px solid var(--booking-line); padding: 5px; }
+.order-reservation-btn-container button { border: 0; background: transparent; color: #c8c2b6; padding: 12px 24px; font-size: 13px; }
+.order-reservation-btn-container button[aria-pressed='true'] { background: var(--booking-gold); color: #1e1e1e; }
+
+.divider-container,
+.order-divider-container {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  border: 1px solid var(--booking-line);
+  background: #242420;
+}
+
+.reservation-image-container { position: relative; isolation: isolate; min-height: 645px; }
+.reservation-image-container > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.reservation-image-container::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, #151512 0%, #15151215 90%); }
+.reservation-image-text { display: flex; flex-direction: column; justify-content: space-between; gap: 80px; height: 100%; padding: 36px; }
+.dmr-experience-text,
+.reservation-numbering,
+.order-menu-header-p1,
+.order-summary-header > p { margin: 0 0 12px; font-size: 10px; letter-spacing: 2px; line-height: 1.8; color: var(--booking-gold); }
+.A-seat-at-our-table-text { margin: 0 0 12px; font: 400 31px/1.2 'Great Vibes', cursive; color: var(--booking-gold); }
+.goodCompany-exceptionalSushi-text { margin: 0 0 14px; font: 400 27px/1.4 'Cinzel', serif; color: var(--booking-gold); }
+.make-room-text { margin: 0; color: #d4cfc4; font-size: 13px; line-height: 1.8; }
+.gold-line { width: 50px; border: 0; border-top: 1px solid var(--booking-gold); margin: 26px 0; }
+.location { margin: 0; font-size: 12px; line-height: 1.8; color: #d4cfc4; }
+.table-reservation-section { min-width: 0; padding: 36px 40px; }
+.reserve-a-table-text,
+.order-menu-header-p2 { margin: 0 0 12px; font: 400 clamp(30px, 3vw, 40px)/1.18 'DM Serif Display', serif; color: var(--booking-gold); }
+.reservation-tagline,
+.order-menu-header-p3,
+.booking-muted { margin: 0; color: #bcb7ac; font-size: 12px; line-height: 1.8; }
+.form-field { margin-top: 26px; }
+.reservation-container label,
+.reservation-times legend { display: block; font-size: 12px; color: #e4ddce; line-height: 1.6; }
+
+.reservation-container input:not([type='radio']),
+.reservation-container select,
+.reservation-container textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #c8bd9f40;
+  border-radius: 0;
+  background: #1e1e1b;
+  color: #f1eee7;
+  color-scheme: dark;
+  padding: 12px;
+  margin: 7px 0 18px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.reservation-container input::placeholder,
+.reservation-container textarea::placeholder { color: #a09c92; }
+.reservation-container textarea { resize: vertical; min-height: 70px; }
+.date-party-size-input-container,
+.name-and-email-input-container { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.reservation-date-field,
+.reservation-party-size-field,
+.name-field,
+.email-field { min-width: 0; }
+.reservation-times { border: 0; padding: 0; margin: 0 0 20px; min-width: 0; }
+.reservation-times legend { margin-bottom: 10px; }
+.time-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.time-button { position: relative; cursor: pointer; }
+.time-button input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.time-button span { display: block; text-align: center; border: 1px solid #c8bd9f40; padding: 9px; }
+.time-button input:checked + span { background: #f3d38215; border-color: var(--booking-gold); color: var(--booking-gold); }
+.time-button input:focus-visible + span { outline: 2px solid var(--booking-gold); outline-offset: 3px; }
+
+.reservation-container .review-reservation-button,
+.reservation-container .order-sushi-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 49px;
+  border: 1px solid var(--booking-gold);
+  background: var(--booking-gold);
+  color: #1e1e1e;
+  padding: 13px 18px;
+  font-size: 11px;
+  letter-spacing: 1.1px;
+}
+
+.review-reservation-button:hover:not(:disabled),
+.order-sushi-button:hover:not(:disabled) { background: #ffe5a4; }
+.review-reservation-button > span,
+.order-sushi-button > span { font-size: 17px; letter-spacing: 0; white-space: nowrap; }
+.booking-footnote { text-align: center; font-size: 10px; color: #b2ad9f; line-height: 1.7; margin: 14px 0 0; }
+.booking-preview-note { font-size: 11px; color: #aaa699; text-align: center; line-height: 1.8; margin: 0; padding: 20px 14px; }
+.reservation-details { margin: 26px 0; border-block: 1px solid var(--booking-line); padding: 14px 0; font-size: 12px; }
+.reservation-details > div,
+.order-totals > div { display: flex; justify-content: space-between; gap: 20px; margin: 14px 0; line-height: 1.8; }
+.reservation-details dt,
+.order-totals dt { color: #bcb7ac; }
+.reservation-details dd,
+.order-totals dd { margin: 0; text-align: right; overflow-wrap: anywhere; white-space: pre-wrap; max-width: 70%; }
+.reservation-container .edit-reservation-button { display: block; border: 0; background: transparent; color: var(--booking-gold); padding: 20px 0 0; font-size: 12px; }
+
+.order-divider-container { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: start; }
+.order-menu-section { min-width: 0; padding: 34px 40px; border-right: 1px solid var(--booking-line); }
+.order-food-selection-container { display: flex; gap: 8px; flex-wrap: wrap; margin: 22px 0; }
+.order-food-selection-container button { border: 1px solid var(--booking-line); background: transparent; color: #d4cfc4; font-size: 11px; padding: 10px 14px; }
+.order-food-selection-container button[aria-pressed='true'] { border-color: var(--booking-gold); color: var(--booking-gold); }
+.order-food-image-container { position: relative; height: 240px; background: #191917; }
+.food-image-container { width: 100%; height: 100%; }
+.food-image-container img { width: 100%; height: 100%; object-fit: contain; }
+.todays-special-container { position: absolute; top: 16px; left: 16px; padding: 9px; font-size: 9px; letter-spacing: 1.5px; background: #1e1e1eee; color: var(--booking-gold); }
+.food-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; margin: 24px 0 18px; }
+.food-heading h2 { margin: 0; font: 400 23px/1.4 'Cinzel', serif; color: var(--booking-gold); }
+.food-heading > span { color: var(--booking-gold); font: 400 22px/1.4 'Cinzel', serif; }
+.food-heading > p { flex-basis: 100%; margin: 0; font-size: 12px; color: #bcb7ac; line-height: 1.8; }
+.preparation-notes-input-label > span { color: #bcb7ac; }
+.order-buttons-container { display: flex; align-items: stretch; gap: 16px; }
+.quantity-controls { flex: 0 0 auto; display: flex; align-items: center; border: 1px solid var(--booking-line); }
+.quantity-controls button { width: 36px; min-height: 47px; padding: 0; border: 0; color: var(--booking-gold); background: transparent; font-size: 20px; }
+.quantity-controls output { min-width: 26px; text-align: center; font-size: 13px; }
+.order-summary-section { min-width: 0; padding: 34px 30px; }
+.order-summary-header h2 { margin: 0 0 14px; color: var(--booking-gold); font: 400 30px/1.4 'DM Serif Display', serif; }
+.order-count { display: inline-flex; align-items: center; justify-content: center; min-width: 25px; height: 25px; padding: 0 4px; border: 1px solid var(--booking-line); font: 12px 'DM Sans', sans-serif; vertical-align: middle; }
+.order-summary-description-container { display: flex; gap: 15px; border-block: 1px solid var(--booking-line); padding: 18px 0; }
+.order-summary-description-container > span { color: var(--booking-gold); font-size: 26px; }
+.order-summary-description > p { font-size: 10px; color: #bcb7ac; line-height: 1.7; margin: 6px 0; }
+.order-summary-description > p:first-child { font-size: 12px; font-weight: 500; color: #f1eee7; margin-top: 0; }
+.order-empty { text-align: center; padding: 40px 0; font-size: 12px; color: #bcb7ac; line-height: 1.8; }
+.order-cart-row { display: flex; align-items: start; gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--booking-line); font-size: 11px; }
+.order-cart-row img { width: 48px; height: 48px; object-fit: contain; background: #191917; }
+.order-cart-row > div { flex: 1; min-width: 0; }
+.order-cart-row strong { font-weight: 500; line-height: 1.6; }
+.order-cart-row p { overflow-wrap: anywhere; white-space: pre-wrap; color: #bcb7ac; line-height: 1.8; }
+.order-cart-row > span { white-space: nowrap; color: var(--booking-gold); }
+.reservation-container .order-remove { display: block; border: 0; padding: 8px 0 0; background: transparent; color: #bcb7ac; text-decoration: underline; font-size: 10px; }
+.order-totals { margin: 26px 0; border-block: 1px solid var(--booking-line); padding: 14px 0; font-size: 12px; }
+.order-confirmation > .booking-muted { margin: 0 0 20px; }
+.booking-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.booking-error { margin: -8px 0 18px; color: #ffb9aa; font-size: 12px; line-height: 1.6; }
+.reservation-container input[aria-invalid='true'] { border-color: #ffb9aa; }
+
+@media (max-width: 850px) {
+  .divider-container,
+  .order-divider-container { grid-template-columns: minmax(0, 1fr); }
+  .reservation-image-container { min-height: 300px; }
+  .reservation-image-container > img { object-position: center 45%; }
+  .reservation-image-text { gap: 30px; }
+  .goodCompany-exceptionalSushi-text { font-size: 25px; }
+  .reservation-image-text .gold-line,
+  .reservation-image-text .location { display: none; }
+  .order-menu-section { border-right: 0; border-bottom: 1px solid var(--booking-line); }
+}
+
+@media (max-width: 520px) {
+  .reservation-container { padding: 20px 16px 0; }
+  .reservation-back-nav { align-items: start; flex-direction: column; gap: 12px; }
+  .reservation-header-container { align-items: start; flex-direction: column; }
+  .order-reservation-btn-container { width: 100%; }
+  .order-reservation-btn-container button { flex: 1; padding-inline: 12px; }
+  .reservation-image-text,
+  .table-reservation-section,
+  .order-menu-section,
+  .order-summary-section { padding: 24px; }
+  .date-party-size-input-container,
+  .name-and-email-input-container { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .food-heading { align-items: start; }
+  .food-heading h2 { font-size: 20px; }
+  .order-buttons-container { flex-wrap: wrap; }
+  .order-buttons-container .order-sushi-button { flex: 1; min-width: 180px; }
+}

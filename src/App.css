@@ -1,0 +1,1627 @@
+/* RESPONSIVE CSS READING GUIDE
+   px = CSS pixels; rem = a multiple of the root font size; vw = 1% of
+   viewport width. Percentages usually depend on the containing block;
+   their exact reference depends on the property (not always the screen).
+
+   min(a, b) chooses the smaller value; max(a, b) chooses the larger.
+   clamp(min, preferred, max) bounds a preferred size. For example,
+   clamp(16px, 2vw, 24px) is 16px at a 600px viewport, 20px at 1000px,
+   and 24px at 1400px. calc() combines units, e.g. 100% minus 40px.
+
+   Grid fr units share available space AFTER gaps and fixed tracks.
+   minmax(0, 1fr) allows a track to shrink to zero and share that space.
+   A bare 1fr has an automatic minimum that can be held open by content.
+   min-width: 0 lets grid/flex items shrink too; text may still need wrapping.
+
+   @media rules apply only when their condition matches. Matching rules
+   join the cascade: specificity wins first, then source order for ties.
+   Breakpoints change layout; fluid sizes adapt between breakpoints.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+html {
+  /* Keep centered content stationary when routes have different heights. */
+  scrollbar-gutter: stable;
+}
+
+@supports not (scrollbar-gutter: stable) {
+  html {
+    overflow-y: scroll;
+  }
+}
+
+body {
+  margin: 0;
+  background-color: #1e1e1e;
+}
+
+.main-container,
+.hero-container,
+.hero-image-container {
+  width: 100%;
+}
+
+.main-container {
+  position: relative;
+  padding: 0;
+  margin-top: 0;
+}
+
+.app-layout {
+  display: grid;
+  /* One flexible column fills the page without a content-based track minimum. */
+  grid-template-columns: minmax(0, 1fr);
+  padding-bottom: 100px;
+}
+
+.app-layout > .navbar,
+.app-layout > .landing-page {
+  /* grid-area: row / column. Sharing a cell overlays navbar and hero.
+     The > selector limits this to direct children of .app-layout. */
+  grid-area: 1 / 1;
+}
+
+.app-layout > .navbar {
+  align-self: start;
+}
+
+.hero-image-container {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  width: 100%;
+  min-height: 46.875vw;
+  padding: clamp(160px, 13.8vw, 352px) 24px clamp(48px, 7vw, 140px);
+  overflow: hidden;
+  background-color: #1e1e1e;
+}
+
+.heroBackgroundImage {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+}
+
+.hero-image-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(30, 30, 30, 0.8) 48%,
+    #1e1e1e 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 1100px);
+  min-width: 0;
+  text-align: center;
+}
+
+.kicker-container,
+.tagline-container {
+  width: 100%;
+}
+
+.kicker-text {
+  margin: 0;
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(18px, 1.45vw, 25px);
+  line-height: 1.2;
+  color: white;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
+  letter-spacing: clamp(2px, 0.434vw, 7.5px);
+  font-weight: 400;
+}
+
+.tagline-text {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  color: #f3d382;
+  /* A fixed base plus viewport growth, bounded at 28px and 70px. */
+  font-size: clamp(28px, calc(16px + 3.125vw), 70px);
+  font-weight: 700;
+  line-height: 1.34;
+  text-wrap: balance;
+}
+
+.hero-caption-container {
+  width: min(100%, 28rem);
+  margin-top: 14px;
+}
+
+.hero-caption-text {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  color: #d9d9d9;
+  font-size: clamp(16px, 1.273vw, 22px);
+  font-weight: 400;
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  padding-block: 14px;
+  background-color: #1e1e1e;
+  width: 100%;
+  z-index: 100;
+}
+
+.navbar--transparent {
+  background-color: transparent;
+}
+
+.navbar-container {
+  display: grid;
+  /* auto sizes the middle track from its content; equal 1fr side tracks
+     keep that middle track centered while there is enough room. */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: clamp(16px, 1.88vw, 32.5px);
+  width: min(83%, 1728px);
+  margin-inline: auto;
+}
+
+.navbar-logo-link {
+  display: block;
+  justify-self: start;
+}
+
+.navbar-logo-image {
+  display: block;
+  width: clamp(60px, 4.75vw, 82px);
+  height: auto;
+}
+
+.navbar-text-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cormorant SC", serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 20px;
+  color: #ffffff;
+  gap: clamp(16px, 1.88vw, 32.5px);
+  cursor:pointer;
+}
+
+.navbar-text-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.reservation-btn-container {
+  justify-self: end;
+}
+
+.reservation-btn,
+.more-about-us-btn,
+.go-to-menu-btn {
+  text-decoration: none;
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  min-height: 49px;
+  padding: 10px;
+  font-family: "Cormorant SC", serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+  appearance: none;
+  border: 1px solid #f5be32;
+  border-radius: 0;
+  overflow: hidden;
+  background-color: transparent;
+  box-shadow: 0 0 15px 5px rgba(245, 190, 50, 0.2);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 400ms ease;
+}
+
+/* The gold layer moves behind the label without changing the button's size. */
+.reservation-btn::before,
+.more-about-us-btn::before,
+.go-to-menu-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: #f5be32;
+  pointer-events: none;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reservation-btn,
+.more-about-us-btn {
+  color: #f5be32;
+}
+
+.reservation-btn::before,
+.more-about-us-btn::before {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.go-to-menu-btn {
+  margin-top: clamp(28px, 3.7vw, 64px);
+  padding-inline: 20px;
+  color: #000;
+}
+
+.go-to-menu-btn::before {
+  transform: scaleX(1);
+  transform-origin: right;
+}
+
+.reservation-btn:focus-visible,
+.more-about-us-btn:focus-visible {
+  color: #000;
+}
+
+.reservation-btn:focus-visible::before,
+.more-about-us-btn:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.go-to-menu-btn:focus-visible {
+  color: #f5be32;
+}
+
+.go-to-menu-btn:focus-visible::before {
+  transform: scaleX(0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .reservation-btn:hover,
+  .more-about-us-btn:hover {
+    color: #000;
+  }
+
+  .reservation-btn:hover::before,
+  .more-about-us-btn:hover::before {
+    transform: scaleX(1);
+  }
+
+  .go-to-menu-btn:hover {
+    color: #f5be32;
+  }
+
+  .go-to-menu-btn:hover::before {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reservation-btn,
+  .more-about-us-btn,
+  .go-to-menu-btn,
+  .reservation-btn::before,
+  .more-about-us-btn::before,
+  .go-to-menu-btn::before {
+    transition: none;
+  }
+}
+
+.navbar-logo-link:focus-visible,
+.navbar-text-links a:focus-visible,
+.reservation-btn:focus-visible,
+.more-about-us-btn:focus-visible,
+.go-to-menu-btn:focus-visible {
+  outline: 2px solid #f3d382;
+  outline-offset: 5px;
+}
+
+@media (max-width: 75rem) {
+  .navbar-container {
+    width: calc(100% - 48px);
+  }
+}
+
+@media (max-width: 58rem) {
+  .navbar-container {
+    grid-template-columns: 1fr auto;
+    row-gap: 12px;
+  }
+
+  .navbar-text-links {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: center;
+  }
+
+  .reservation-btn-container {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .hero-image-container {
+    /* svh uses the small viewport height (with browser controls visible).
+       min-height is a floor: taller content can still grow the section. */
+    min-height: 100svh;
+    align-content: center;
+    padding-top: 176px;
+    padding-bottom: 64px;
+  }
+}
+
+@media (max-width: 40rem) {
+  .navbar-container {
+    width: calc(100% - 32px);
+    column-gap: 12px;
+  }
+
+  .navbar-text-links {
+    font-size: clamp(16px, 4.5vw, 18px);
+    gap: clamp(10px, 3vw, 20px);
+  }
+
+  .reservation-btn,
+  .more-about-us-btn {
+    font-size: 18px;
+  }
+
+  .hero-image-container {
+    padding-inline: 20px;
+  }
+
+  .kicker-text {
+    letter-spacing: 2px;
+  }
+
+  .tagline-container {
+    margin-top: 12px;
+  }
+
+  .tagline-text {
+    line-height: 1.2;
+  }
+
+  .desktop-break {
+    display: none;
+  }
+}
+
+.special-menu-texts-container {
+  margin-top: 0;
+  padding-top: 30px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.special-menu-text,
+.quality-food-text {
+  margin: 0;
+  font-family: "Great Vibes", cursive;
+  /* clamp(minimum, fluid size, maximum): keep the bounds in ascending order. */
+  font-size: clamp(18px, 1.45vw, 22px);
+  line-height: 1.2;
+  color: white;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
+  letter-spacing: clamp(5px, 0.434vw, 5.5px);
+  font-weight: 400;
+}
+
+.todays-special-text,
+.our-specialities-text {
+  margin: 0;
+  font-family: "DM Serif Display", serif;
+  color: #F3D382;
+  font-size: clamp(40px, 1.273vw, 80px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+.special-menu-caption,
+.our-specialities-caption {
+  margin-top: 1%;
+  text-align: center;
+  font-family: "DM Sans", sans-serif;
+  color: #f6eeeedb;
+  /* The 16px floor keeps captions readable near tablet/desktop breakpoints. */
+  font-size: clamp(16px, 1.273vw, 20px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+.special-menu-foods-container {
+  margin-top: 2%;
+  display: grid;
+  width: min(100%, 1248px);
+  /* repeat(3, ...) creates three equal flexible columns. Breakpoints below
+     replace this with two columns, then one, rather than squeezing all three. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 1fr);
+  gap: 0;
+}
+
+.special-menu-food-image {
+  min-width: 0;
+  /* aspect-ratio is width / height, not a pixel size. It supplies a preferred
+     proportion when at least one dimension is automatic. */
+  aspect-ratio: 1.44 / 1.089;
+}
+
+.special-menu-food-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+}
+
+.special-menu-food-description,
+.special-menu-food-description-two {
+  aspect-ratio: 1.44 / 1.089;
+  display: flex;
+  flex-direction: column;
+}
+
+.special-menu-food-description {
+  background-color: #2C2C2C;
+}
+
+.special-menu-food-description-two {
+  background-color: #1E1E1E;
+}
+
+.special-menu-food-description-container {
+  margin-top: 10%;
+  margin-left: 7.5%;
+}
+.tuna-sushi-text,
+.salmon-sushi-text,
+.just-sushi-text {
+  font-family: "Cinzel", serif;
+  color: #F3D382;
+  font-size: clamp(16px, calc(16px + 3.125vw), 23px);
+  font-weight: 700;
+  line-height: 1.34;
+  text-wrap: balance;
+}
+
+.tuna-sushi-description,
+.salmon-sushi-description,
+.just-sushi-description {
+  font-family: "DM Sans", sans-serif;
+  color: #d9d9d9;
+  font-size: clamp(16px, 1.273vw, 20px);
+  font-weight: 400;
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+.rating {
+  margin-top: 3.5%;
+  display: flex;
+  gap: 2%;
+}
+
+.order-now-btn,
+.order-now-btn::before,
+.order-now-btn::after {
+  box-sizing: border-box;
+}
+
+.order-now-btn {
+  text-decoration: none;
+  margin-top: 6%;
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  min-height: 49px;
+  padding: 10px;
+
+  font-family: "Cormorant SC", serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+  color: #f5be32;
+
+  appearance: none;
+  border: 1px solid #f5be32;
+  border-radius: 0;
+  overflow: hidden;
+  background-color: transparent;
+  box-shadow: 0 0 15px 5px rgba(245, 190, 50, 0.2);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 400ms ease;
+}
+
+.order-now-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: #f5be32;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.order-now-btn:focus-visible {
+  color: #000;
+  outline: 2px solid #f3d382;
+  outline-offset: 5px;
+}
+
+.order-now-btn:focus-visible::before {
+  transform: scaleX(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .order-now-btn:hover {
+    color: #000;
+  }
+
+  .order-now-btn:hover::before {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .order-now-btn,
+  .order-now-btn::before {
+    transition: none;
+  }
+}
+
+@media (max-width: 40rem) {
+  .order-now-btn {
+    font-size: 18px;
+  }
+}
+
+.restaurant-background-picture-container {
+  width: 100%;
+  margin-top: 6%;
+}
+
+.restaurant-background-picture-container img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.our-specialities-texts-container {
+  /* var() reads the measured navbar height, with 110px as a fallback.
+     Scroll margin offsets scrollIntoView without adding visible layout space. */
+  scroll-margin-top: calc(var(--navbar-height, 110px) + 12px);
+  width: 100%;
+  margin-top: 100px;
+  padding-inline: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.our-specialities-text {
+  font-size: clamp(48px, 1.5276vw, 96px);
+}
+
+.food-specialties-navbuttons-container {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 100%;
+  padding-inline: 20px;
+  gap: 12px 20px;
+}
+
+.specialties-btn,
+.homestyle-sushi-btn,
+.steak-btn,
+.with-rice-btn,
+.cocktails-btn,
+.wine-btn,
+.appetizer-btn {
+  color: #FFFFFF;
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  min-height: 49px;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.2;
+  appearance: none;
+  border: 1px solid #ffffff;
+  border-radius: 0;
+  overflow: hidden;
+  background-color: transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 400ms ease;
+  padding: 12px 22px;
+}
+
+.steak-btn {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.with-rice-btn, .cocktails-btn {
+  padding-left: 26px;
+  padding-right: 26px;
+}
+
+.wine-btn {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.food-specialties-navbuttons-container > a::before,
+.dining-events-buttons-container > button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: #F5BE32;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.food-specialties-navbuttons-container > a[aria-current="page"],
+.dining-events-buttons-container > button[aria-pressed="true"] {
+  color: #000;
+}
+
+.food-specialties-navbuttons-container > a[aria-current="page"]::before,
+.dining-events-buttons-container > button[aria-pressed="true"]::before {
+  transform: scaleX(1);
+}
+
+.food-specialties-navbuttons-container > a:focus-visible,
+.dining-events-buttons-container > button:focus-visible {
+  outline: 2px solid #F5BE32;
+  outline-offset: 5px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .food-specialties-navbuttons-container > a:hover,
+  .dining-events-buttons-container > button:hover {
+    color: #000;
+  }
+
+  .food-specialties-navbuttons-container > a:hover::before,
+  .dining-events-buttons-container > button:hover::before {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .food-specialties-navbuttons-container > a,
+  .food-specialties-navbuttons-container > a::before,
+  .dining-events-buttons-container > button,
+  .dining-events-buttons-container > button::before {
+    transition: none;
+  }
+}
+
+.food-menu-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: flex-start;
+  width: min(100% - 40px, 1248px);
+  margin-inline: auto;
+  margin-top: 2%;
+}
+
+.specialities-item-one-container,
+.specialities-item-two-container,
+.specialities-item-three-container {
+  display: grid;
+  /* 3fr : 2fr divides track space 60% : 40% AFTER subtracting the gap.
+     This avoids the overflow that 60% + 40% + a separate gap would cause. */
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 60px);
+  width: 100%;
+}
+
+.item-one-image,
+.item-two-image,
+.item-three-image,
+.item-one-texts-container,
+.item-two-texts-container,
+.item-three-texts-container {
+  min-width: 0;
+}
+
+.item-one-image img,
+.item-two-image img,
+.item-three-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.item-one-texts-container,
+.item-two-texts-container,
+.item-three-texts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.item-one-name-text,
+.item-two-name-text,
+.item-three-name-text {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  color: #f3d382;
+  /* Grow gently from 20px to 24px instead of using reversed clamp bounds. */
+  font-size: clamp(20px, calc(16px + 0.5vw), 24px);
+  font-weight: 700;
+  line-height: 1.34;
+  text-wrap: balance;
+  width: 100%;
+}
+
+.item-one-ingredients-text,
+.item-two-ingredients-text,
+.item-three-ingredients-text {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  color: #f6eeeedb;
+  /* Matches the mobile floor, so crossing 1000px does not shrink the text. */
+  font-size: clamp(16px, 1.273vw, 20px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4;
+  text-wrap: balance;
+  width: 100%;
+}
+
+.item-one-price,
+.item-two-price,
+.item-three-price {
+  margin-top: 3%;
+  display: flex;
+  font-family: "Cinzel", serif;
+  color: #f3d382;
+  font-size: clamp(20px, calc(10px + 1.5vw), 34px);
+  font-weight: 700;
+  line-height: 1.34;
+  text-wrap: balance;
+  width: 100%;
+}
+
+.specialities-item-two-container {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+}
+
+@media (max-width: 40rem) {
+  .specialities-item-one-container,
+  .specialities-item-two-container,
+  .specialities-item-three-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.food-specialties-navbuttons-container > a {
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.item-one-image img,
+.item-two-image img,
+.item-three-image img {
+  aspect-ratio: 4 / 3;
+  /* cover fills the image box while preserving proportions, cropping excess.
+     contain would show the whole image, potentially leaving empty space. */
+  object-fit: cover;
+}
+
+.item-price-caption {
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  color: #d9d9d9;
+}
+
+.events-texts-and-buttons-container {
+  width: min(600px, 100%);
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+}
+
+.choose-your-food-text {
+  margin: 0;
+  font-family: "Great Vibes", cursive;
+  font-size: 18px;
+  line-height: 1.2;
+  color: white;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
+  letter-spacing: clamp(2px, 0.434vw, 7.5px);
+  font-weight: 400;
+
+}
+
+.dining-events-text {
+  margin: 0;
+  font-family: "DM Serif Display", serif;
+  color: #F3D382;
+  font-size: clamp(40px, 1.273vw, 80px);
+  font-style: norma;
+  font-weight: 400;
+  line-height: 1.6;
+  text-wrap: balance;
+  margin-top: 0;
+
+}
+
+.dining-events-caption {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  color: #f6eeeedb;
+  text-align: center;
+  margin: 12px 0 0;
+  line-height: 1.5;
+}
+
+.dining-events-buttons-container {
+  display: flex;
+  margin-top: 30px;
+  gap: 25px;
+}
+
+.private-events-btn,
+.corporate-events-btn,
+.reserve-table-btn {
+  text-decoration: none;
+  color: #FFFFFF;
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  min-height: 49px;
+  padding: 10px;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.2;
+  appearance: none;
+  border: 1px solid #ffffff;
+  border-radius: 0;
+  overflow: hidden;
+  background-color: transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 400ms ease;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.dining-events-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: min(1500px, 100% - 40px);
+  margin-top: 3%;
+}
+
+.dining-event {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: 50px;
+
+}
+
+.dining-event .event-image {
+  display: block;
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  aspect-ratio: 6 / 3.4;
+  object-fit: cover;
+}
+
+
+.dining-event .event-tint {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 1;
+  pointer-events: none;
+
+}
+
+.event-text-container {
+  z-index: 5;
+  position:absolute;
+  display: flex;
+  flex-direction: column;
+  top: 40%;
+  left: -25%;
+}
+.event-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 15px;
+  margin-left: -45%;
+}
+
+.event-price,
+.event-title {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.event-title {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  color: #f3d382;
+  /* Equal clamp bounds mean a fixed 25px; the smaller-screen rule overrides it. */
+  font-size: clamp(25px, calc(16px + 3.125vw), 25px);
+  font-weight: 700;
+  line-height: 1.34;
+  text-wrap: balance;
+}
+
+.event-price {
+  margin-right: 40px;
+  display: inline-block;
+  margin: 0;
+  font-family: "Cinzel", serif;
+  color: #f3d382;
+  /* This is likewise fixed at 50px until the breakpoint overrides it. */
+  font-size: clamp(50px, calc(16px + 3.125vw), 50px);
+  font-weight: 700;
+  line-height: 1.34;
+  text-wrap: balance;
+}
+
+.event-description {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  color: #d9d9d9;
+  font-size: clamp(16px, 1.273vw, 22px);
+  font-weight: 400;
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+.dining-event-reversed {
+  margin-left: 50px;
+  margin-right: auto;
+}
+
+.dining-event-reversed .event-text-container {
+  top: 35%;
+  left: auto;
+  right: calc(-25% + 150px);
+  text-align: right;
+}
+
+.dining-event-reversed .event-heading {
+  margin-left: 0;
+  margin-right: -45%;
+  flex-direction: row-reverse;
+}
+
+@media (max-width: 1600px) {
+  .dining-event,
+  .dining-event-reversed {
+    margin-inline: 0;
+    align-self: center;
+  }
+
+  .event-text-container,
+  .dining-event-reversed .event-text-container {
+    left: 24px;
+    right: 24px;
+  }
+
+  .event-heading,
+  .dining-event-reversed .event-heading {
+    margin-inline: 0;
+    flex-wrap: wrap;
+  }
+}
+
+/* Tablets also need room for long corporate headings. Below 1000px, move
+   copy into a separate grid row so its content determines the row height;
+   it can wrap without spilling beyond a fixed-height image overlay. */
+@media (max-width: 1000px) {
+  .dining-event {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dining-event .event-image,
+  .dining-event .event-tint {
+    grid-area: 1 / 1;
+  }
+
+  .dining-event .event-tint {
+    position: static;
+    min-height: 0;
+  }
+
+  .event-text-container,
+  .dining-event-reversed .event-text-container {
+    /* Static positioning restores normal flow; desktop offsets no longer apply. */
+    position: static;
+    grid-area: 2 / 1;
+    padding: 20px 4px 0;
+    text-align: left;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .event-heading,
+  .dining-event-reversed .event-heading {
+    flex-direction: row;
+    gap: 8px 16px;
+  }
+
+  .event-price {
+    font-size: 32px;
+  }
+
+  .event-title {
+    font-size: 22px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .event-description {
+    font-size: 16px;
+  }
+}
+
+.dining-events-buttons-container {
+  max-width: calc(100% - 32px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.events-texts-and-buttons-container {
+  max-width: 100%;
+  padding-inline: 16px;
+  text-align: center;
+}
+
+@media (max-width: 1000px) {
+  .special-menu-foods-container {
+    width: calc(100% - 40px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+    row-gap: 24px;
+  }
+
+  .special-menu-food-image {
+    grid-column: 1;
+    aspect-ratio: auto;
+  }
+
+  .special-menu-food-image:nth-child(1) { grid-row: 1; }
+  .special-menu-food-image:nth-child(2) { grid-row: 2; }
+  .special-menu-food-image:nth-child(3) { grid-row: 3; }
+
+  .special-menu-food-description,
+  .special-menu-food-description-two {
+    grid-column: 2;
+    aspect-ratio: auto;
+    padding: 24px;
+    justify-content: center;
+  }
+
+  .special-menu-food-description-container {
+    margin: 0;
+  }
+
+  .special-menu-food-image img {
+    object-fit: cover;
+  }
+
+  .special-menu-caption,
+  .our-specialities-caption,
+  .item-one-ingredients-text,
+  .item-two-ingredients-text,
+  .item-three-ingredients-text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar-text-links {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .special-menu-caption {
+    padding-inline: 20px;
+  }
+
+  .special-menu-foods-container {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+    margin-top: 24px;
+  }
+
+  .special-menu-food-image,
+  .special-menu-food-description,
+  .special-menu-food-description-two {
+    grid-column: 1;
+  }
+
+  .special-menu-food-image:nth-child(1) { grid-row: 1; }
+  .special-menu-food-image:nth-child(2) { grid-row: 3; }
+  .special-menu-food-image:nth-child(3) { grid-row: 5; }
+
+  .special-menu-food-image {
+    aspect-ratio: 4 / 3;
+  }
+
+  .special-menu-food-description,
+  .special-menu-food-description-two {
+    margin-bottom: 24px;
+  }
+
+  .specialities-item-two-container .item-two-image {
+    grid-row: 1;
+  }
+
+  .food-menu-container {
+    gap: 40px;
+    margin-top: 28px;
+  }
+
+  .our-specialities-texts-container {
+    margin-top: 48px;
+  }
+
+  .our-specialities-text,
+  .dining-events-text {
+    font-size: clamp(32px, 8vw, 40px);
+    line-height: 1.25;
+  }
+
+  .dining-events-caption {
+    font-size: 16px;
+  }
+
+  .dining-events-buttons-container {
+    gap: 12px;
+  }
+
+  .dining-events-buttons-container > button,
+  .food-specialties-navbuttons-container > a {
+    font-size: 16px;
+    padding-inline: 16px;
+  }
+
+  .dining-events-menu {
+    margin-top: 28px;
+    padding-bottom: 32px;
+  }
+}
+
+.about-page {
+  margin-top: 0;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.about-us-text {
+  margin: 0;
+  font-family: "Great Vibes", cursive;
+  font-size: 18px;
+  line-height: 1.2;
+  color: white;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
+  letter-spacing: clamp(2px, 0.434vw, 7.5px);
+  font-weight: 400;
+}
+
+.our-story-text {
+  margin: 0;
+  font-family: "DM Serif Display", serif;
+  color: #F3D382;
+  font-size: clamp(40px, 1.273vw, 80px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.6;
+  text-wrap: balance;
+  margin-top: 0;
+
+}
+
+.about-us-caption {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  color: #f6eeeedb;
+  text-align: center;
+  margin: 12px 0 0;
+  line-height: 1.5;
+}
+
+
+.about-header {
+  width: min(600px, 100%);
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  padding-inline: 16px;
+  text-align: center;
+
+}
+
+@media (max-width: 640px) {
+  .our-story-text {
+    font-size: clamp(32px, 8vw, 40px);
+    line-height: 1.25;
+  }
+
+  .about-us-caption {
+    font-size: 16px;
+  }
+}
+
+.chef-image-and-description-container {
+  margin-top: 40px;
+  /* Cap the desktop width while reserving 20px gutters on smaller screens.
+     Auto margins center both sides instead of spending 13.5% on the left. */
+  width: min(1300px, calc(100% - 40px));
+  margin-inline: auto;
+  display: grid;
+  /* Zero minimums let both columns shrink below their content's natural width. */
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 50px);
+}
+
+.chef-image-container {
+  min-width: 0;
+  width: 100%;
+}
+
+.chef-image-container img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.chef-story-description {
+  min-width: 0;
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  color: #d9d9d9;
+  font-size: clamp(16px, 1.273vw, 20px);
+  font-weight: 300;
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+.chef-story-text {
+  /* Space between paragraphs, rather than a large blank area above each one. */
+  margin: 0;
+}
+
+.chef-story-text + .chef-story-text {
+  margin-top: clamp(20px, 2vw, 32px);
+}
+
+.more-about-us-btn {
+  margin-top: 40px;
+}
+
+/* At tablet widths, one column gives the story a readable line length.
+   The image comes first because grid follows the existing HTML order. */
+@media (max-width: 900px) {
+  .chef-image-and-description-container {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 680px;
+    gap: 24px;
+  }
+
+  .chef-image-container img {
+    /* Natural height preserves the whole photo in the stacked layout. */
+    height: auto;
+    aspect-ratio: auto;
+  }
+
+  .chef-story-description .more-about-us-btn {
+    margin-top: 24px;
+  }
+}
+
+.contacts-container {
+  position: relative;
+  width: 100%;
+  background-color: #1e1e1e;
+}
+
+.contacts-images-container {
+  position: relative;
+  width: 100%;
+  /* Two content rows grow with the heading and details. Unlike absolute
+     positioning, grid keeps room for wrapped text and the footer below it. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  /* auto accommodates the heading; 1fr takes remaining height for details
+     while retaining its content minimum, so the section can grow. */
+  grid-template-rows: auto 1fr;
+}
+
+.contacts-images-container > img:first-child {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Span both rows behind the content; keep the photo's natural proportions.
+     Content can make the section taller than the photo on narrow screens. */
+  /* Four values = row-start / column-start / row-end / column-end.
+     Grid lines 1 to 3 span TWO rows, and column lines 1 to 2 span one column. */
+  grid-area: 1 / 1 / 3 / 2;
+  align-self: start;
+}
+
+.contacts-images-container .contacts-tint{
+  position: absolute;
+  /* inset: 0 sets top/right/bottom/left to zero against the positioned parent.
+     This overlay does not contribute to the parent's content height. */
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contacts-header-container {
+  grid-area: 1 / 1;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+  padding: 16px;
+  margin: 0;
+  font-family: "Cinzel", serif;
+  color: #f3d382;
+  font-size: clamp(20px, calc(16px + 3.125vw), 50px);
+  font-weight: 700;
+  line-height: 1.34;
+  text-wrap: balance;
+}
+
+.contacts-header-container h1 {
+  margin: 0;
+  font: inherit;
+}
+
+.contacts-details-container {
+  grid-area: 2 / 1;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Fluid vertical spacing shrinks with the viewport but never reaches zero. */
+  padding: clamp(24px, 4vw, 64px) 16px 32px;
+}
+
+.address-and-contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  max-width: 100%;
+}
+
+.contact-detail {
+  /* Wrap whole icon/text pairs, rather than leaving an icon on its own row. */
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.pin-logo {
+  margin-top: 1%;
+  width: 35px;
+  height: 35px;
+  /* flex: none = 0 0 auto: do not grow or shrink the explicit icon dimensions. */
+  flex: none;
+  object-fit: contain;
+}
+
+
+.address-and-contact-container p {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: left;
+  font-family: "DM Sans", sans-serif;
+  color: #f6eeeedb;
+  /* A readable floor prevents phone text from shrinking to 10px. */
+  font-size: clamp(16px, 1.273vw, 17.5px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+.phone-logo {
+  margin-top: 1%;
+  width: 35px;
+  height: 35px;
+  flex: none;
+  object-fit: contain;
+}
+
+.contacts-restaurant-logo {
+  display: block;
+  width: 64px;
+  height: auto;
+  flex: none;
+  /* Keep the requested desktop gap; reclaim vertical space on phones. */
+  margin-top: clamp(64px, 14vw, 200px);
+}
+
+.contacts-social-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* Two gap values mean row gap, then column gap; wrapping uses the row gap. */
+  gap: 12px 30px;
+  margin-top: 20px;
+}
+
+.contacts-social-link {
+  position: relative;
+  display: inline-block;
+  font-family: "Cormorant SC", serif;
+  font-weight: 300;
+  font-size: 20px;
+  color: #ffffff;
+  text-decoration: none;
+
+}
+
+.contacts-social-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  /* 10% left inset + 80% width leaves 10% clear on the right of each link. */
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background-color: #f5be32;
+  /* scaleX animates visual width from 0 to 1 without moving surrounding text.
+     transform-origin sets which edge the line expands/retracts from. */
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 300ms ease;
+}
+
+.contacts-social-link:hover::after,
+.contacts-social-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contacts-social-link::after {
+    transition: none;
+  }
+}
+
+/* Phones stack the contact pairs. Fixed 35px icons retain their size while
+   the text column wraps; the social row can wrap independently using flex. */
+@media (max-width: 640px) {
+  .address-and-contact-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.reserve-table-btn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  min-height: 49px;
+  margin-top: 40px;
+  padding: 10px 20px;
+  font-family: "Cormorant SC", serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.2;
+  appearance: none;
+  border: 1px solid #000;
+  border-radius: 0;
+  overflow: hidden;
+  background-color: #f5be32;
+  color: #000;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 400ms ease;
+}
+
+.not-found-page {
+  padding: 80px 24px;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  color: #f1eee7;
+}
+
+.not-found-page h1 {
+  color: #f3d382;
+  font: 400 clamp(30px, 5vw, 48px)/1.3 'DM Serif Display', serif;
+}
